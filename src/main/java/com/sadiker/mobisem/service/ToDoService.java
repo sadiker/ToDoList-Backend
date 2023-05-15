@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 // import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,7 @@ public class ToDoService {
     @Autowired
     UserRepository userRepository;
 
+    @CachePut(value = "todos")
     public MyResponse createToDo(CreateToDoRequest createToDoRequest) {
 
         LocalDate localDate;
@@ -75,6 +80,9 @@ public class ToDoService {
 
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "todos", allEntries = true),
+    })
     public IResponse deleteToDoByName(String name, UserRequest userRequest) {
 
         User user;
@@ -110,10 +118,13 @@ public class ToDoService {
 
     }
 
+    @Cacheable("todos")
     public IResponse todos(UserRequest userRequest) {
+
         User user;
 
         try {
+            Thread.sleep(5000);
             Optional<User> optUser = userRepository.findByUsername(userRequest.getUsername());
             if (optUser.isPresent() && optUser.get().getPassword().equals(userRequest.getPassword())) {
                 user = optUser.get();
@@ -134,6 +145,9 @@ public class ToDoService {
 
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "todos", allEntries = true),
+    })
     public IResponse deleteToDoByLine(int line, UserRequest userRequest) {
         User user;
         try {
