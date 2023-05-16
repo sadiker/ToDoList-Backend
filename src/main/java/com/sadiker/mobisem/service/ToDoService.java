@@ -28,7 +28,7 @@ public class ToDoService {
     @Autowired
     UserRepository userRepository;
 
-    @CachePut(value = "todos")
+    @CacheEvict(value = "todos",key="#createToDoRequest.userRequest.username")
     public MyResponse createToDo(CreateToDoRequest createToDoRequest) {
 
         LocalDate localDate;
@@ -62,6 +62,7 @@ public class ToDoService {
                 }
 
                 userRepository.save(user);
+                // todos(createToDoRequest.getUserRequest());
 
                 return MyResponse.builder()
                         .message(user.getUsername() + " adlı kullanıcının planı kaydedildi.")
@@ -80,9 +81,7 @@ public class ToDoService {
 
     }
 
-    @Caching(evict = {
-            @CacheEvict(value = "todos", allEntries = true),
-    })
+    @Caching(evict = { @CacheEvict(value  = "todos",key = "#userRequest.username")})
     public IResponse deleteToDoByName(String name, UserRequest userRequest) {
 
         User user;
@@ -118,13 +117,13 @@ public class ToDoService {
 
     }
 
-    @Cacheable("todos")
+    @Cacheable(value = "todos",key = "#userRequest.username")
     public IResponse todos(UserRequest userRequest) {
 
         User user;
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
             Optional<User> optUser = userRepository.findByUsername(userRequest.getUsername());
             if (optUser.isPresent() && optUser.get().getPassword().equals(userRequest.getPassword())) {
                 user = optUser.get();
@@ -145,9 +144,8 @@ public class ToDoService {
 
     }
 
-    @Caching(evict = {
-            @CacheEvict(value = "todos", allEntries = true),
-    })
+  
+    @Caching(evict = { @CacheEvict(value  = "todos",key = "#userRequest.username")})
     public IResponse deleteToDoByLine(int line, UserRequest userRequest) {
         User user;
         try {
