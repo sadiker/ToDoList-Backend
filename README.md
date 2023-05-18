@@ -40,11 +40,11 @@
 2- Navigate to main proje root on terminal 
   	
 	cd .../ToDoList-Backend...
-3- For Maven clean and install OR take help IDE
+3- For Maven clean and install OR take help IDE (Before this, you must write "localhost" instead of "mobisemmongodb" on the "application.properties" file)
   	
 	mvn clean 	
 	mvn install
-4- Navigate to target folder,Run the project jar file  (Before this, you must write "localhost" instead of "mobisemmongodb" on the "application.properties" file) 
+4- Navigate to target folder,Run the project jar file   
   
 	cd target	
 	java -jar springboot-mongo-docker.jar
