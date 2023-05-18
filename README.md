@@ -7,11 +7,10 @@
 2- Navigate to main proje root on terminal 
   	
         cd .../ToDoList-Backend...
-3- For Maven clean and install and test the project (you can see test results) OR take help IDE
+3- For Maven clean and install , OR take help IDE
   	
 	mvn clean 
 	mvn install
-	mvn test 
  
 4-  Pull mongo image from DockerHub 
   
@@ -32,6 +31,11 @@
 6- You can write the browser and see Swagger API documentation
   	
 	http://localhost:8080/swagger-ui/index.html 
+7- Unit test, OR take help IDE
+  	
+	cd src 
+	cd test
+	mvn test
 
 ### 2) On Local   
 1- Download the repository as zip or copy from link :
@@ -40,7 +44,7 @@
 2- Navigate to main proje root on terminal 
   	
 	cd .../ToDoList-Backend...
-3- For Maven clean and install OR take help IDE (Before this, you must write "localhost" instead of "mobisemmongodb" on the "application.properties" file)
+3- For Maven clean and install , OR take help IDE (Before this, you must write "localhost" instead of "mobisemmongodb" on the "application.properties" file)
   	
 	mvn clean 	
 	mvn install
